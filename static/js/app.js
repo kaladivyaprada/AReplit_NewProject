@@ -7,6 +7,7 @@ let cropData = null;
 let currentResults = null;
 let pieChart = null;
 let barChart = null;
+let cropMapLayer = null;
 
 document.addEventListener('DOMContentLoaded', function() {
     initializeMap();
@@ -233,9 +234,13 @@ async function analyzeRegion() {
         }
         
         currentResults = await response.json();
-        progressBarInner.style.width = '100%';
+        progressBarInner.style.width = '95%';
         
         displayResults(currentResults);
+        
+        await generateCropMap(payload);
+        
+        progressBarInner.style.width = '100%';
         updateStatus('Analysis complete', 'success');
         
     } catch (error) {
@@ -400,6 +405,50 @@ function addCropLayersToMap(results) {
         
         const bounds = geoJsonLayer.getBounds();
         map.fitBounds(bounds);
+    }
+}
+
+async function generateCropMap(payload) {
+    try {
+        updateStatus('Generating crop map...', 'warning');
+        
+        const response = await fetch('/api/generate-crop-map', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                geometry: payload.geometry,
+                start_date: payload.start_date,
+                end_date: payload.end_date
+            })
+        });
+        
+        if (!response.ok) {
+            console.log('Crop map generation failed or not available');
+            return;
+        }
+        
+        const cropMapData = await response.json();
+        
+        if (cropMapData.demo_mode) {
+            console.log(cropMapData.message);
+            return;
+        }
+        
+        if (cropMapData.tile_url) {
+            if (cropMapLayer) {
+                map.removeLayer(cropMapLayer);
+            }
+            
+            cropMapLayer = L.tileLayer(cropMapData.tile_url, {
+                attribution: 'Google Earth Engine',
+                opacity: 0.7,
+                maxZoom: 18
+            }).addTo(map);
+            
+            console.log('Pixel-level crop classification map displayed');
+        }
+    } catch (error) {
+        console.error('Error generating crop map:', error);
     }
 }
 

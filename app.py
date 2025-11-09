@@ -123,6 +123,38 @@ def export_geojson():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@app.route('/api/generate-crop-map', methods=['POST'])
+def generate_crop_map():
+    """
+    Generate pixel-level crop classification map
+    
+    Expected JSON payload:
+    {
+        "geometry": {...},
+        "start_date": "YYYY-MM-DD",
+        "end_date": "YYYY-MM-DD"
+    }
+    """
+    try:
+        data = request.get_json()
+        
+        geometry = data.get('geometry')
+        start_date = data.get('start_date')
+        end_date = data.get('end_date')
+        
+        if not geometry:
+            return jsonify({'error': 'No geometry provided'}), 400
+        
+        print(f"Generating crop classification map...")
+        
+        crop_map_data = gee_handler.generate_crop_classification_map(geometry, start_date, end_date)
+        
+        return jsonify(crop_map_data)
+    
+    except Exception as e:
+        print(f"Error generating crop map: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
 @app.route('/api/health', methods=['GET'])
 def health_check():
     """Health check endpoint"""

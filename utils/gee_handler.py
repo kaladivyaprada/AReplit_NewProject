@@ -151,3 +151,65 @@ class GEEHandler:
         ]
         
         return features, ndvi_data
+    
+    def generate_crop_classification_map(self, geometry, start_date=None, end_date=None):
+        """
+        Generate a pixel-level crop classification map using NDVI thresholds
+        
+        Returns:
+            dict with map tile URL or image data
+        """
+        if not self.initialized:
+            return self._generate_demo_crop_map(geometry)
+        
+        try:
+            if not end_date:
+                end_date = datetime.now().strftime('%Y-%m-%d')
+            if not start_date:
+                start_date = (datetime.now() - timedelta(days=90)).strftime('%Y-%m-%d')
+            
+            ee_geometry = self._convert_to_ee_geometry(geometry)
+            
+            collection = (ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED')
+                         .filterBounds(ee_geometry)
+                         .filterDate(start_date, end_date)
+                         .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 20)))
+            
+            def add_ndvi(image):
+                ndvi = image.normalizedDifference(['B8', 'B4']).rename('NDVI')
+                return image.addBands(ndvi)
+            
+            collection_with_ndvi = collection.map(add_ndvi)
+            ndvi_composite = collection_with_ndvi.select('NDVI').median()
+            
+            classified = (ndvi_composite
+                         .where(ndvi_composite.gte(0.6), 0)
+                         .where(ndvi_composite.gte(0.4).And(ndvi_composite.lt(0.6)), 1)
+                         .where(ndvi_composite.gte(0.35).And(ndvi_composite.lt(0.5)), 2)
+                         .where(ndvi_composite.lt(0.35), 3))
+            
+            vis_params = {
+                'min': 0,
+                'max': 3,
+                'palette': ['2ecc71', 'f39c12', '8b4513', '95a5a6']
+            }
+            
+            map_id = classified.clip(ee_geometry).getMapId(vis_params)
+            
+            return {
+                'success': True,
+                'tile_url': map_id['tile_fetcher'].url_format,
+                'map_id': map_id.get('mapid', ''),
+                'vis_params': vis_params
+            }
+        except Exception as e:
+            print(f"Error generating crop map: {e}")
+            return self._generate_demo_crop_map(geometry)
+    
+    def _generate_demo_crop_map(self, geometry):
+        """Generate demo crop map visualization"""
+        return {
+            'success': True,
+            'demo_mode': True,
+            'message': 'Demo mode: Pixel-level crop map requires GEE credentials'
+        }

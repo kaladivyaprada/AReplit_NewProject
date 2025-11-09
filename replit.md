@@ -33,15 +33,17 @@ A complete web-based crop classification system for analyzing agricultural regio
 2. **Map Drawing**: Custom area selection using Leaflet drawing tools
 3. **Satellite Analysis**: NDVI time-series from Sentinel-2 (via GEE API)
 4. **Crop Classification**: 4 crop types - Paddy/Rice, Millet/Pulses, Cash Crops, Fallow/Barren
-5. **Results Dashboard**: Area statistics, confidence scores, crop distribution
-6. **Data Visualization**: Pie charts and bar charts using Chart.js
-7. **Export Options**: CSV and GeoJSON export functionality
+5. **Pixel-Level Crop Map**: Color-coded visualization showing crop types at pixel level (requires GEE credentials)
+6. **Results Dashboard**: Area statistics, confidence scores, crop distribution
+7. **Data Visualization**: Pie charts and bar charts using Chart.js
+8. **Export Options**: CSV and GeoJSON export functionality
 
 ### API Endpoints
 - `GET /`: Main application interface
 - `GET /api/regions`: Indian administrative region data
 - `GET /api/crop-types`: Crop type metadata
 - `POST /api/analyze`: Trigger crop analysis for selected region
+- `POST /api/generate-crop-map`: Generate pixel-level crop classification map
 - `POST /api/export/csv`: Export results as CSV
 - `POST /api/export/geojson`: Export results as GeoJSON
 - `GET /api/health`: Health check endpoint
@@ -92,6 +94,10 @@ The application runs in demo mode without GEE credentials, using simulated satel
 
 ## Recent Changes
 **November 9, 2025**
+- Added pixel-level crop classification map visualization (like the Karnataka example image)
+- Maps display color-coded pixels showing different crop types across the region
+- Green for Paddy/Rice, Orange for Millet/Pulses, Brown for Cash Crops, Gray for Fallow/Barren
+- Uses Google Earth Engine tile layers for high-resolution visualization
 - Fixed critical issue: GEE handler now properly computes real NDVI percentiles from satellite data
 - When GEE credentials are provided, the system uses actual Sentinel-2 statistics instead of hard-coded values
 - Enhanced error handling with appropriate fallbacks for missing data keys
