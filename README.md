@@ -1,0 +1,128 @@
+Create a complete web-based crop classification system for any region in India with the following features:
+
+TECHNICAL STACK:
+- Backend: Python Flask with REST API
+- Frontend: HTML/CSS/JavaScript with Leaflet maps
+- Satellite Data: Google Earth Engine API
+- Machine Learning: Scikit-learn Random Forest
+- Visualization: Chart.js, Mapbox/Leaflet
+- Database: JSON files (no external DB needed)
+
+PROJECT STRUCTURE:
+crop-mapper-india/
+├── app.py (Flask backend)
+├── static/
+│   ├── css/style.css
+│   ├── js/app.js
+│   └── images/
+├── templates/
+│   └── index.html
+├── models/
+│   └── crop_classifier.pkl
+├── utils/
+│   ├── gee_handler.py
+│   ├── model_predictor.py
+│   └── map_generator.py
+├── data/
+│   ├── regions.json
+│   └── crop_data.json
+└── requirements.txt
+
+CORE FEATURES:
+
+1. REGION SELECTION INTERFACE:
+   - Dropdown for Indian states → districts → talukas
+   - Map boundary selection using drawing tools
+   - Coordinate input option
+   - Real-time area calculation
+
+2. SATELLITE DATA PROCESSING:
+   - Automated NDVI time-series from Sentinel-2
+   - Cloud masking and filtering
+   - Multi-temporal composites (25th, 50th, 75th percentiles)
+   - Seasonal analysis (Kharif/Rabi)
+
+3. CROP CLASSIFICATION:
+   - Pre-trained Random Forest model (4 classes):
+     * Paddy/Rice (Green)
+     * Millet/Pulses (Yellow) 
+     * Cash Crops (Brown)
+     * Fallow/Barren (Gray)
+   - Real-time prediction on selected area
+   - Confidence scores per crop type
+
+4. INTERACTIVE RESULTS DASHBOARD:
+   - Color-coded crop map overlay
+   - Area statistics (hectares & percentage)
+   - Crop distribution pie chart
+   - Top crops ranking
+   - Downloadable reports (PDF/CSV)
+
+5. API ENDPOINTS:
+   - /api/regions (get Indian administrative boundaries)
+   - /api/analyze (trigger crop analysis)
+   - /api/results (get prediction results)
+   - /api/download (export maps and data)
+
+IMPLEMENTATION DETAILS:
+
+Frontend (index.html):
+- Responsive Bootstrap layout
+- Leaflet map with drawing tools
+- Region selection dropdowns
+- Analysis progress bar
+- Interactive results panel with charts
+- Mobile-friendly design
+
+Backend (app.py):
+- Flask server with CORS support
+- GEE authentication handling
+- Async task processing
+- Model loading and prediction
+- File export generation
+
+Key Utilities:
+- gee_handler.py: Earth Engine API calls
+- model_predictor.py: ML model operations  
+- map_generator.py: Visualization creation
+
+DATA FLOW:
+1. User selects region → get boundaries
+2. Fetch Sentinel-2 NDVI data for area
+3. Preprocess and extract features
+4. Run pre-trained classifier
+5. Generate maps and statistics
+6. Display interactive results
+
+DEPENDENCIES (requirements.txt):
+flask==2.3.3
+earthengine-api==0.1.316
+numpy==1.24.3
+pandas==2.0.3
+scikit-learn==1.3.0
+joblib==1.3.2
+rasterio==1.3.8
+matplotlib==3.7.2
+folium==0.15.1
+geopandas==0.13.2
+requests==2.31.0
+waitress==2.1.2
+
+INITIAL SETUP:
+- Include sample Indian region boundaries
+- Pre-trained model for immediate use
+- Demo data for quick testing
+- GEE service account integration
+
+Make the interface clean and intuitive with:
+- Step-by-step workflow guidance
+- Real-time processing status
+- Interactive map with layer toggles
+- Professional agriculture-themed UI
+- Hindi/English language support option
+
+The system should work entirely in-browser without external dependencies beyond GEE API. Include comprehensive error handling and user feedback.
+
+GEE_SERVICE_ACCOUNT = your-service-account@project.iam.gserviceaccount.com
+GEE_PRIVATE_KEY = -----BEGIN PRIVATE KEY-----\n...
+MAPBOX_ACCESS_TOKEN = pk.your_mapbox_token
