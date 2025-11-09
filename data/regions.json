@@ -1,0 +1,123 @@
+{
+  "states": [
+    {
+      "name": "Karnataka",
+      "code": "KA",
+      "center": [15.3173, 75.7139],
+      "districts": [
+        {
+          "name": "Bangalore Urban",
+          "code": "BLR",
+          "center": [12.9716, 77.5946],
+          "talukas": ["Bangalore North", "Bangalore South", "Anekal"]
+        },
+        {
+          "name": "Mysuru",
+          "code": "MYS",
+          "center": [12.2958, 76.6394],
+          "talukas": ["Mysuru", "Hunsur", "Nanjangud", "T. Narasipura"]
+        },
+        {
+          "name": "Tumkur",
+          "code": "TUM",
+          "center": [13.3392, 77.1006],
+          "talukas": ["Tumkur", "Gubbi", "Tiptur", "Turuvekere"]
+        },
+        {
+          "name": "Mandya",
+          "code": "MND",
+          "center": [12.5244, 76.8958],
+          "talukas": ["Mandya", "Maddur", "Malavalli", "Srirangapatna"]
+        }
+      ]
+    },
+    {
+      "name": "Maharashtra",
+      "code": "MH",
+      "center": [19.7515, 75.7139],
+      "districts": [
+        {
+          "name": "Pune",
+          "code": "PUN",
+          "center": [18.5204, 73.8567],
+          "talukas": ["Pune City", "Haveli", "Mulshi", "Maval", "Bhor"]
+        },
+        {
+          "name": "Mumbai",
+          "code": "MUM",
+          "center": [19.0760, 72.8777],
+          "talukas": ["Mumbai City", "Mumbai Suburban"]
+        },
+        {
+          "name": "Nashik",
+          "code": "NSK",
+          "center": [19.9975, 73.7898],
+          "talukas": ["Nashik", "Igatpuri", "Dindori", "Peth"]
+        }
+      ]
+    },
+    {
+      "name": "Tamil Nadu",
+      "code": "TN",
+      "center": [11.1271, 78.6569],
+      "districts": [
+        {
+          "name": "Chennai",
+          "code": "CHN",
+          "center": [13.0827, 80.2707],
+          "talukas": ["Chennai North", "Chennai South", "Alandur"]
+        },
+        {
+          "name": "Coimbatore",
+          "code": "COI",
+          "center": [11.0168, 76.9558],
+          "talukas": ["Coimbatore North", "Coimbatore South", "Pollachi"]
+        },
+        {
+          "name": "Madurai",
+          "code": "MAD",
+          "center": [9.9252, 78.1198],
+          "talukas": ["Madurai North", "Madurai South", "Melur"]
+        }
+      ]
+    },
+    {
+      "name": "Punjab",
+      "code": "PB",
+      "center": [31.1471, 75.3412],
+      "districts": [
+        {
+          "name": "Ludhiana",
+          "code": "LDH",
+          "center": [30.9010, 75.8573],
+          "talukas": ["Ludhiana East", "Ludhiana West", "Jagraon"]
+        },
+        {
+          "name": "Amritsar",
+          "code": "ASR",
+          "center": [31.6340, 74.8723],
+          "talukas": ["Amritsar", "Ajnala", "Tarn Taran"]
+        }
+      ]
+    },
+    {
+      "name": "Uttar Pradesh",
+      "code": "UP",
+      "center": [26.8467, 80.9462],
+      "districts": [
+        {
+          "name": "Lucknow",
+          "code": "LKO",
+          "center": [26.8467, 80.9462],
+          "talukas": ["Lucknow", "Mohanlalganj", "Malihabad"]
+        },
+        {
+          "name": "Kanpur Nagar",
+          "code": "KNP",
+          "center": [26.4499, 80.3319],
+          "talukas": ["Kanpur", "Ghatampur", "Bilhaur"]
+        }
+      ]
+    }
+  ]
+}

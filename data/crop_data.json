@@ -1,0 +1,65 @@
+{
+  "crop_types": [
+    {
+      "id": 0,
+      "name": "Paddy/Rice",
+      "color": "#2ecc71",
+      "description": "Rice cultivation, primarily in Kharif season",
+      "ndvi_range": [0.6, 0.9],
+      "typical_states": ["Punjab", "Uttar Pradesh", "Tamil Nadu"]
+    },
+    {
+      "id": 1,
+      "name": "Millet/Pulses",
+      "color": "#f39c12",
+      "description": "Millets, pulses, and legume crops",
+      "ndvi_range": [0.4, 0.65],
+      "typical_states": ["Karnataka", "Maharashtra", "Rajasthan"]
+    },
+    {
+      "id": 2,
+      "name": "Cash Crops",
+      "color": "#8b4513",
+      "description": "Cotton, sugarcane, and commercial crops",
+      "ndvi_range": [0.5, 0.75],
+      "typical_states": ["Maharashtra", "Gujarat", "Punjab"]
+    },
+    {
+      "id": 3,
+      "name": "Fallow/Barren",
+      "color": "#95a5a6",
+      "description": "Uncultivated or barren land",
+      "ndvi_range": [0.0, 0.3],
+      "typical_states": ["All"]
+    }
+  ],
+  "seasons": {
+    "kharif": {
+      "name": "Kharif (Monsoon)",
+      "months": [6, 7, 8, 9, 10],
+      "description": "Sown in June-July, harvested in September-October"
+    },
+    "rabi": {
+      "name": "Rabi (Winter)",
+      "months": [10, 11, 12, 1, 2, 3],
+      "description": "Sown in October-November, harvested in March-April"
+    }
+  },
+  "demo_analysis": {
+    "region": "Karnataka - Mandya District",
+    "total_area_ha": 45680,
+    "analysis_date": "2024-10-15",
+    "crop_distribution": {
+      "Paddy/Rice": 18500,
+      "Millet/Pulses": 12300,
+      "Cash Crops": 8900,
+      "Fallow/Barren": 5980
+    },
+    "confidence_scores": {
+      "Paddy/Rice": 0.89,
+      "Millet/Pulses": 0.76,
+      "Cash Crops": 0.82,
+      "Fallow/Barren": 0.91
+    }
+  }
+}
