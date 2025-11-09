@@ -68,19 +68,37 @@ class GEEHandler:
             ndvi_25th = collection_with_ndvi.select('NDVI').reduce(ee.Reducer.percentile([25]))
             ndvi_75th = collection_with_ndvi.select('NDVI').reduce(ee.Reducer.percentile([75]))
             
-            stats = ndvi_median.reduceRegion(
+            stats_median = ndvi_median.reduceRegion(
                 reducer=ee.Reducer.mean(),
                 geometry=ee_geometry,
                 scale=30,
                 maxPixels=1e9
             ).getInfo()
             
+            stats_25th = ndvi_25th.reduceRegion(
+                reducer=ee.Reducer.mean(),
+                geometry=ee_geometry,
+                scale=30,
+                maxPixels=1e9
+            ).getInfo()
+            
+            stats_75th = ndvi_75th.reduceRegion(
+                reducer=ee.Reducer.mean(),
+                geometry=ee_geometry,
+                scale=30,
+                maxPixels=1e9
+            ).getInfo()
+            
+            mean_ndvi = stats_median.get('NDVI', 0.5)
+            percentile_25 = stats_25th.get('NDVI_p25', stats_25th.get('NDVI', mean_ndvi - 0.15))
+            percentile_75 = stats_75th.get('NDVI_p75', stats_75th.get('NDVI', mean_ndvi + 0.15))
+            
             return {
                 'success': True,
-                'mean_ndvi': stats.get('NDVI', 0.5),
-                'percentile_25': 0.4,
-                'percentile_50': stats.get('NDVI', 0.5),
-                'percentile_75': 0.6,
+                'mean_ndvi': mean_ndvi,
+                'percentile_25': percentile_25,
+                'percentile_50': mean_ndvi,
+                'percentile_75': percentile_75,
                 'image_count': collection.size().getInfo(),
                 'start_date': start_date,
                 'end_date': end_date
